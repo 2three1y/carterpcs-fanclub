@@ -2,7 +2,7 @@
 
 An RGB-maxed, fully accessible fan club website for tech creator CarterPCs, with a benchmark-style fan counter that never stops climbing.
 
-**Live demo:** https://carterpcs-fanclub.sites.tab.bot/
+**Live demo:** https://2three1y.github.io/carterpcs-fanclub/
 
 ## Features
 
