@@ -123,3 +123,5 @@ background:linear-gradient(135deg,#ff3b5c,#b46bff 50%,#3fa9ff);box-shadow:0 10px
   .ticker-track li[aria-hidden="true"]{display:none}
   .pause-btn{display:none}
 }
+/* contrast: white ticker label text needs at least 4.5:1 */
+.ticker-label{background:#d1143a}

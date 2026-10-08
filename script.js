@@ -1,6 +1,8 @@
 (function(){
   "use strict";
   var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Calm mode (photosensitivity notice at the top, on by default) or the system Reduce Motion setting: no confetti, no motion.
+  function calm(){return window.calmMode?window.calmMode():reduce;}
   function fmt(x){return x.toLocaleString("en-US");}
 
   // Ticker: duplicate items for a seamless loop (copies hidden from assistive tech)
@@ -11,7 +13,7 @@
   var el=document.getElementById("fanCount"),live=document.getElementById("fanLive");
   var n=7300000001,paused=false;
   function paint(){if(el) el.textContent=fmt(n);}
-  setInterval(function(){if(paused) return;n+=Math.floor(Math.random()*9)+1;paint();},800);
+  setInterval(function(){if(document.hidden) return;if(paused) return;n+=Math.floor(Math.random()*9)+1;paint();},800);
 
   // Pause control for everything that moves or updates on its own
   var pb=document.getElementById("pauseBtn");
@@ -23,14 +25,15 @@
 
   // Confetti (RGB edition)
   var canvas=document.getElementById("confetti"),ctx=canvas.getContext("2d");
-  var parts=[],running=false,colors=["#ff3b5c","#ffd23f","#2bff88","#3fa9ff","#b46bff","#ffffff"];
+  var parts=[],running=false,colors=["#ff3b5c","#ffd23f","#2bff88","#3fa9ff","#b46bff"];
   function size(){var d=window.devicePixelRatio||1;canvas.width=innerWidth*d;canvas.height=innerHeight*d;ctx.setTransform(d,0,0,d,0,0);}
   size();addEventListener("resize",size);
   function burst(x,y,count){
-    if(reduce) return;
+    if(calm()||document.hidden) return;
+    count=Math.min(count,36); // gentle: fewer, slower pieces, no white
     for(var i=0;i<count;i++){
       var a=Math.random()*Math.PI*2,s=4+Math.random()*9;
-      parts.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-6,w:6+Math.random()*6,h:8+Math.random()*8,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:colors[i%colors.length],life:0,icon:Math.random()<.07});
+      parts.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-6,w:6+Math.random()*6,h:8+Math.random()*8,r:Math.random()*6,vr:(Math.random()-.5)*.12,c:colors[i%colors.length],life:0,icon:Math.random()<.07});
     }
     if(!running){running=true;requestAnimationFrame(tick);}
   }
@@ -76,6 +79,5 @@
       jb.textContent="You're in. Press again to celebrate";}
     else{jm.textContent="Still a fan. Always a fan. Zero snoozes.";}
   });
-
-  setTimeout(function(){burst(innerWidth/2,innerHeight*0.3,90);},600);
+  // No confetti on load: nothing moves until the visitor asks for it.
 })();
