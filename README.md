@@ -37,8 +37,8 @@ This is an unofficial fan page made for fun. It is not affiliated with, endorsed
 
 ## Credits
 
-Commissioned by Hasan ([@2three1y](https://github.com/2three1y)). Built with [Tab](https://tab.bot).
+Commissioned by Carter ([@2three1y](https://github.com/2three1y)). Built with [Tab](https://tab.bot).
 
 ## License
 
-[MIT](LICENSE) © 2026 Hasan (2three1y)
+[MIT](LICENSE) © 2026 Carter (2three1y)
